@@ -1,0 +1,11 @@
+
+int main() {
+
+  int day, month, year;
+
+  printf("Vnesi datum v ISO zapisu:");
+  scanf("%4d-%2d-%2d", &year, &month, &day);
+  printf("Datum je: %d.%d.%d\n", day, month, year);
+
+  return 0;
+}

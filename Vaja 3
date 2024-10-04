@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main(void) {
+
+  int a = 143;
+  int b = 23;
+  int c = 0;
+  // & logicni operator za IN
+  c = a & b;
+  // | logicni operator za ALI
+  c = a | b;
+  // ^ logicni operator za XOR
+  c = a ^ b;
+  // ! logicni operator za NEG
+  c = !a;
+
+  printf("%d", c);
+  return 0;
+}

@@ -13,6 +13,12 @@ int main(void) {
   c = a ^ b;
   // ! logicni operator za NEG
   c = !a;
+  // < manjsi,
+  //> vecji,
+  //<= manjse ali enako,
+  //>= vecje ali enako,
+  //== enako,
+  //!= različno
 
   printf("%d", c);
   return 0;

@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main(void) {
+
+  int x, y, x1, x2 ,x3;
+  printf("Vpiši prvo število: ");
+  
+  scanf("%d", &x);
+  
+  printf("Vpiši drugo število: ");
+  
+  scanf("%d", &y);
+  
+  x1 = x && y;
+  printf("Rezultat je: %d", x1);
+
+  x2 = x || y;
+  printf("\nRezultat je: %d", x2);
+
+  x3 = !x;
+  printf("\nRezultat je: %d", x3);
+
+  return 0;
+}

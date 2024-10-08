@@ -1,0 +1,11 @@
+*/
+
+#include <stdio.h>
+
+int main() {
+  int x, vsota = 0;
+  
+for(x=1; x<=100; x+=1)
+  vsota += x;
+  printf("Vsota je: %d\n", vsota);
+}

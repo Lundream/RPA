@@ -1,0 +1,23 @@
+  int x = 1;
+
+  while (x != 0) {
+    scanf("%d", &x);
+    
+    switch (x) {
+      
+    case 1: printf("ocena: negativna");
+      break;
+    case 2: printf("ocena: zadostno");
+      break;
+    case 3: printf("ocena: dobro");
+      break;
+    case 4: printf("ocena: pravdobro");
+      break;
+    case 5: printf("ocena: odlicna");
+      break;
+    default:
+      printf("ocena: nepravilna\n");
+    }
+  }
+  return 0;
+}

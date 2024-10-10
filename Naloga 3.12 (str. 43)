@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+
+int preveri_trikotnik(double a, double b, double c){
+  if(a+b>c && a+c>b && b+c>a){
+    return 1;  
+} 
+  return 0;
+}  
+
+
+int main(void){
+
+int ukaz;
+double a=0, b=0, c=0;
+
+  
+  
+printf("Dobrodo sel v programu za razresevanje trikotnikov. \nUporabis lahko naslednje ukaze:\n (0) Vnos stranic, (1) Ploscina, (2) Obseg, (3) Koti, (4) Izhod\n");
+
+printf("Vnesi ukaz: ");  
+scanf("%d", &ukaz);
+
+if(ukaz == 0)
+  printf("Vnesi dolzine stranice ");
+  scanf(" %lf %lf %lf", &a, &b, &c);
+
+  if(preveri_trikotnik(a, b, c))
+  
+  
+
+

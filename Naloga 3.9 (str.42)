@@ -1,0 +1,108 @@
+include <stdio.h>
+
+int main(void) {
+  unsigned int stevilo;
+  scanf("%u", &stevilo);
+  if (stevilo <= 20 && stevilo > 99);
+    printf("Vpisal si stevilo: %u", stevilo);
+
+  unsigned int stevka1 = stevilo % 10;
+
+  switch (stevka1) {
+  case 1:
+    printf("enain");
+    break;
+  case 2:
+    printf("dvain");
+    break;
+  case 3:
+    printf("triin");
+    break;
+  case 4:
+    printf("stiriin");
+    break;
+  case 5:
+    printf("petin");
+    break;
+  case 6:
+    printf("sestin");
+    break;
+  case 7:
+    printf("sedemin");
+    break;
+  case 8:
+    printf("osemin");
+    break;
+  case 9:
+    printf("devetin");
+    break;
+  }
+
+  unsigned int stevka2 = stevilo / 10;
+  switch (stevka2) {
+  case 1:
+    printf("najst");
+    break;
+  case 2:
+    printf("dvajset");
+    break;
+  case 3:
+    printf("trideset");
+    break;
+  case 4:
+    printf("stirideset");
+    break;
+  case 5:
+    printf("petdeset");
+    break;
+  case 6:
+    printf("sestdeset");
+    break;
+  case 7:
+    printf("sedemset");
+    break;
+  case 8:
+    printf("osemdeset");
+    break;
+  case 9:
+    printf("devetdeset");
+    break;
+  }
+
+  if (stevilo > 0 && stevilo < 10){
+
+    unsigned int stevka3 = stevilo % 10;
+  switch (stevka3) {
+  case 1:
+    printf("ena");
+    break;
+  case 2:
+    printf("dve");
+    break;
+  case 3:
+    printf("tri");
+    break;
+  case 4:
+    printf("stiri");
+    break;
+  case 5:
+    printf("pet");
+    break;
+  case 6:
+    printf("sest");
+    break;
+  case 7:
+    printf("sedem");
+    break;
+  case 8:
+    printf("osem");
+    break;
+  case 9:
+    printf("devet");
+    break;
+  case 10:
+    printf("deset");
+    break;
+  }
+  }
+}

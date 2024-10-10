@@ -1,1 +1,7 @@
-
+*/ 
+Izdelajte program, ki proti ˇ cloveˇ skemu igralcu igra igro jemanja ˇ zetonov s kupa. 
+Igra poteka tako, da igralca s kupa izmeniˇ cno jemljeta enega, dva ali tri ˇ zetone. 
+Izgubi tisti, ki s kupa vzame zadnji ˇ zeton. Primer delovanja programa: Vnesi zaˇ cetno ˇ stevilo ˇ zetonov: 15 Kdo bo prvi na potezi (0: ˇ clovek, 1: raˇ cunalnik): 0 Na kupu je 15 ˇ zetonov. Tvoja poteza: 1 Raˇ cunalnik vzame 1 ˇ zetonov. Na kupu je 13 ˇ zetonov. 
+Tvoja poteza: 2 Raˇ cunalnik vzame 2 ˇ zetonov. Na kupu je 9 ˇ zetonov. Tvoja poteza: 8 Ne goljufaj! Vzameˇ s lahko en, dva ali tri ˇ zetone! 
+Na kupu je 9 zetonov. Tvoja poteza: 3 Raˇ cunalnik vzame 1 ˇ zetonov. Na kupu je 5 ˇ zetonov. Tvoja poteza: 1 Raˇ cunalnik vzame 3 ˇ zetonov. Na kupu je 1 ˇ zetonov. Izgubil/a si!
+/*

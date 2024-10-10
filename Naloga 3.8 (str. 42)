@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+int main(void) {
+  unsigned int stevilo;
+  scanf("%u", &stevilo);
+  if (stevilo < 30 || stevilo > 99)
+    printf("Nisi vnesel pravega stevila");
+
+  unsigned int stevka1 = stevilo % 10;
+
+  switch (stevka1) {
+  case 1:
+    printf("enain");
+    break;
+  case 2:
+    printf("dvain");
+    break;
+  case 3:
+    printf("triin");
+    break;
+  case 4:
+    printf("stiriin");
+    break;
+  case 5:
+    printf("petin");
+    break;
+  case 6:
+    printf("sestin");
+    break;
+  case 7:
+    printf("sedemin");
+    break;
+  case 8:
+    printf("osemin");
+    break;
+  case 9:
+    printf("devetin");
+    break;
+  }
+
+  unsigned int stevka2 = stevilo / 10;
+  switch (stevka2) {
+  case 3:
+    printf("trideset");
+    break;
+  case 4:
+    printf("stirideset");
+    break;
+  case 5:
+    printf("petdeset");
+    break;
+  case 6:
+    printf("sestdeset");
+    break;
+  case 7:
+    printf("sedemset");
+    break;
+  case 8:
+    printf("osemdeset");
+    break;
+  case 9:
+    printf("devetdeset");
+    break;
+  }
+}

@@ -1,0 +1,102 @@
+#include <Arduino.h>
+
+#define tipka1 15  // Button 1 pin
+#define tipka2 4   // Button 2 pin
+
+// Define LED pins
+const int ledPins[] = {19, 18, 17, 16}; // Array of LED pins
+const int numLEDs = sizeof(ledPins) / sizeof(ledPins[0]); // Number of LEDs
+
+bool isRunning = false; // State to track if the sequence is running
+bool isRunning2 = false; // State to track  if the sequence 2 is running
+int currentLED = 0;     // Index of the currently active LED
+
+void setup() {
+    // Initialize LED pins as OUTPUT
+    for (int i = 0; i < numLEDs; i++) {
+        pinMode(ledPins[i], OUTPUT);
+        digitalWrite(ledPins[i], LOW); // Ensure all LEDs are off initially
+    }
+    
+    pinMode(tipka1, INPUT); // Button 1 as input
+    pinMode(tipka2, INPUT); // Button 2 as input
+}
+
+void loop() {
+    // Read the state of Button 1
+    int buttonState1 = digitalRead(tipka1);
+    static int lastButtonState1 = HIGH; // Assume button is not pressed initially
+
+    // Check if the button state has changed from pressed to released
+    if (lastButtonState1 == HIGH && buttonState1 == LOW) {
+        if (!isRunning) {
+            // Start the sequence
+            isRunning = true;
+            currentLED = 0; // Start with the first LED
+        } else {
+            // Stop the sequence
+            isRunning = false;
+            // Turn off all LEDs
+            for (int i = 0; i < numLEDs; i++) {
+                digitalWrite(ledPins[i], LOW);
+            }
+        }
+        delay(200); // Debounce delay
+    }
+    lastButtonState1 = buttonState1; // Update the last button state
+
+    // If the sequence is running, cycle through the LEDs
+    if (isRunning) {
+        // Activate the current LED
+        digitalWrite(ledPins[currentLED], HIGH);
+        delay(200); // Keep the LED on for a while
+
+        // Turn off the current LED
+        digitalWrite(ledPins[currentLED], LOW);
+        
+        // Move to the next LED
+        currentLED++;
+        if (currentLED >= numLEDs) { // If it goes beyond the last LED, reset to 0
+            currentLED = 0;
+        }
+    }
+
+    /////////////////// Read the state of Button 2///////////////////
+
+    int buttonState2 = digitalRead(tipka2);
+    static int lastButtonState2 = HIGH; // Assume button is not pressed initially
+
+    // Check if the button state has changed from pressed to released
+    if (lastButtonState2 == HIGH && buttonState2 == LOW) {
+        if (!isRunning2) {
+            // Start the sequence
+            isRunning2 = true;
+            currentLED = 3; // Start with the last LED
+        } else {
+            // Stop the sequence
+            isRunning2 = false;
+            // Turn off all LEDs
+            for (int i = 0; i < numLEDs; i++) {
+                digitalWrite(ledPins[i], LOW);
+            }
+        }
+        delay(200); // Debounce delay
+    }
+    lastButtonState2 = buttonState2; // Update the last button state
+
+    // If the sequence is running, cycle through the LEDs
+    if (isRunning2) {
+        // Activate the current LED
+        digitalWrite(ledPins[currentLED], HIGH);
+        delay(200); // Keep the LED on for a while
+
+        // Turn off the current LED
+        digitalWrite(ledPins[currentLED], LOW);
+        
+        // Move to the next LED
+        currentLED--;
+        if (currentLED < 0) { // If it goes beyond the last LED, reset to 0
+            currentLED = 3;
+        }
+    }
+}

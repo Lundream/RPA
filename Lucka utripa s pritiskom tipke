@@ -1,0 +1,45 @@
+#include <Arduino.h>
+
+#define tipka 15
+#define led 16
+
+int staro_stanje_tipke = 1;
+bool tipka_pritisnjena = false;
+
+
+void task_led (void *parameter){
+  pinMode(led, OUTPUT);
+  
+  while(1){
+  if(tipka_pritisnjena){
+    digitalWrite(led, HIGH);
+    delay(200);
+    digitalWrite(led, LOW);
+    delay(200);
+  }
+  vTaskDelay(1);
+ }
+}
+
+
+void task_tipka (void *parameter){
+  pinMode(tipka, INPUT);
+  
+  while(1){
+    int stanje_tipke = digitalRead(tipka);
+    if(staro_stanje_tipke == 0 && stanje_tipke == 1){
+      tipka_pritisnjena = !tipka_pritisnjena;
+  }
+  staro_stanje_tipke = stanje_tipke;
+  vTaskDelay(1);
+ }
+}
+
+
+void setup()
+{
+  xTaskCreate(task_led, "t1", 2000, NULL, 1, NULL);
+  xTaskCreate(task_tipka, "t2", 2000, NULL, 1, NULL);
+}
+
+void loop(){}

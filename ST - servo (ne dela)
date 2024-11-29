@@ -1,0 +1,39 @@
+#include <Arduino.h>
+#define led 13
+
+int32_t pos = 0, predznak = 10;
+HardwareTimer *Timer2 = new HardwareTimer(TIM2);
+HardwareTimer *Timer1 = new HardwareTimer(TIM1);
+
+void timerInt();
+void timer2Int();
+
+void setup() {
+  pinMode(8, OUTPUT);
+  pinMode(led, OUTPUT);
+
+  Timer1->setOverflow(20000, MICROSEC_FORMAT);
+  Timer1->attachInterrupt(timerInt);
+  Timer1->resume();
+
+  Serial.begin(9600);
+}
+
+void loop(){
+  pos = 1000;
+}
+
+
+void timerInt(){
+  digitalWrite(8, 1);
+  pos += 10;
+  if(pos>1000) pos = 0;
+  Timer2->setOverflow(pos + 1000, MICROSEC_FORMAT);
+  Timer2->attachInterrupt(timer2Int);
+  Timer2->resume();
+}
+
+void timer2Int(){
+  digitalWrite(8,0);
+  Timer2->detachInterrupt();
+}

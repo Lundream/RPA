@@ -1,0 +1,39 @@
+/*Napiši program, ki bo po serijski povezavi vsako sekundo izpisoval temperaturo izmerjeno z NTC termistorjem.
+Termistor ima beta konstanto z NTCvalednostjo 4150K.*/
+
+#include <Arduino.h>
+#include <math.h>
+
+// Definicija konstant
+const int thermistorPin = 12; // Pin, na katerem je termistor
+const float R1 = 10000; // Upornost R1 v ohmih (10kΩ)
+const float beta = 4150; // Beta konstanta v Kelvinah
+const float Tz = 298.15; // Referenčna temperatura (25°C v Kelvinah)
+const float R0 = 10000; // Upornost termistorja pri T0 (10kΩ)
+
+// Funkcija za izračun temperature iz NTC termistorja
+float getTemperature(int analogValue) {
+    // Izračun upornosti termistorja
+    float R2 = R1 * (4095.0 / analogValue - 1); // 4095 za 12-bitni ADC na ESP32
+    
+    // Izračun temperature v Kelvinih
+    float temperatureK = 1.0 / ((log(R2 / R0) / beta) + (1.0 / Tz));
+    
+    // Pretvorba v Celzije
+    float temperatureC = temperatureK - 273.15;
+    
+    return temperatureC;
+}
+
+void setup() {
+    Serial.begin(9600); // Inicializacija serijske povezave
+}
+
+void loop() {
+    int analogValue = analogRead(thermistorPin); // Preberi vrednost iz termistorja
+    float temperature = getTemperature(analogValue); // Izračunaj temperaturo
+    Serial.print("Temperatura: ");
+    Serial.print(temperature);
+    Serial.println(" °C"); // Izpis temperature v Celziju
+    delay(1000); // Počakaj 1 sekundo
+}

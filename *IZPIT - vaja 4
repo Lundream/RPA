@@ -1,0 +1,26 @@
+/*  
+4. vaja
+Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno spreminjala od 0 do 
+maksimalne s pomočjo obračanja potenciometra priključenega na 14 pin mikrokontrolerja.
+*/
+
+#include <Arduino.h>
+
+//Deklaracija pinov in vrednosti potenciometra
+int led1 = 19;
+int potPin = 14;
+int potVal = 0;
+
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(potPin, INPUT);
+}
+
+void loop(){
+  
+//vrednosti potenciometra so od 0 do 4095, lucke pa 0 do 255 in z "map" nardimo da soupadajo (super razloženo i know haha)
+ potVal = analogRead(potPin);
+ potVal = map(potVal, 0, 4095, 0, 255);
+ analogWrite(led1, potVal);
+ delay(10);
+}

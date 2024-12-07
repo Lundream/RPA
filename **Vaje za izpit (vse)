@@ -1,0 +1,66 @@
+1. vaja
+Napiši program, ki bo po serijski povezavi vsako sekundo izpisoval temperaturo izmerjeno z NTC termistorjem. Termistor ima beta konstanto z vrednostjo 4150K.
+--
+2. vaja
+Napiši program, ki bo OLED prikazovalniku vsako sekundo osvežil prikaz temperature izmerjene z NTC termistorjem. Termistor ima beta konstanto z vrednostjo 4150K.
+--
+3. vaja
+Napiši program, ki bo povzročil, da se bo svetilnost diode led D1 zvezno spreminjala od 0 do maksimalne in nato spet do nič. Cikel naj se neprestano ponavlja.
+--
+4. vaja
+Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno spreminjala od 0 do maksimalne s pomočjo obračanja potenciometra priključenega na 14 pin mikrokontrolerja.
+--
+5. vaja
+Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno od 0 do maksimalne in nato spet do nič s spreminjanjem osvetljenosti foto upora priključenega na pin 13.
+--
+6. vaja
+Napiši program, ki bo s pomočjo potenciometra najprej zvečal svetilnost dode D4 od 0 do 100%. Ko dioda D4 doseže maksimalno svetilnost se začne večati svetilnost diode D3. 
+Ko dioda doseže maksimalno svetilnost se začne večati svetilnost D2. Nato še D1. 
+En obrat potenciometra mora spremeniti za četi z vsemi led diodami ugasnjenimi in končati z vsemi diodami na maksimalni svetilnosti.
+--
+7. vaja
+Napiši program, prikazoval višino temperature s pomočjo štirih diod led, tako kot pri 6. vaji.
+--
+8. vaja
+Napiši program, ki bo s pomočjo potencimetra spreminjal svetilnosti štirih led. Ko prva led doseže 50% svetilnosti začne svetiti druga. Ko prva dioda sveti s 100%, druga doseže 50% in začne svetiti tretja. Ponovi isto še s četrto.
+--
+9. vaja
+Napiši program, ki bo meril razdaljo s pomočjo ultrazvočnega senzorja razdalje in izmerjeno vrdnost vsakih 100 mili sekund izpisal po serijski povezavi.
+--
+10. vaja
+Napiši program, ki bo ob pritisku na tipko izmeril razdaljo in to izpisal po serijski povezavi. Ob vsakem pritisku tipke naj izpiše le eno razdaljo.
+--
+11. vaja
+Napiši program, ki bo ob pritisku na prvo tipko na oled dipleju izrisal pobavan krogec. Ob pritisku na drugo tipko naj se na istem mestu izriše ne-pobavan krogec.
+--
+12. vaja
+Napiši program, ki bo prižgal led in na oled izpisal odklenjeno le ob zaporednem pritisku prve, druge, prve, prve in druge tipke. Ves preostali čas naj bo led dioda ugasnjena in na oled naj bo izpisano: zakljenjeno.
+--
+13. vaja
+Program iz vaje 8 spremeni tako, da bodo diode prikazovale oddaljenost med desetimi centimetri in enim metrom (parkirni senzor).
+--
+14. vaja
+Napiši program, ki bo na zaslonu led prikazoval padanje snežink.
+--
+15. vaja
+Napiši program, ki bo na zaslonu oled prikazal premikanje avta od leve proti desni. Ko avto pride do konca displeja, se pokaže spet na levi in potuje proti desni.
+--
+16. vaja
+Napiši program, ki bo na zaslonu oled prikazal premikanje avta od leve proti desni. Ko avto pride do konca displeja, se pokaže spet na levi in potuje proti desni.
+--
+17. vaja
+Napiši program, ki bo na zaslonu oled prikazal premikanje izrisane snežinke. Premikanje se izvede s pomočjo spreminjaja položaja potenciometra. Celoten premik potenciometra mora zadostovati za premik snežinke čez celotno širino zaslona.
+--
+18. vaja
+Napiši program, ki bo na zaslonu oled grafično prikazal razdaljo do predmeta izmerjeno s pomočjo ultrazvočnega senzorja. Ko se predmet nahaja na razdalji manjši od 20 centimetrov naj svetijo vse točke displeja. 
+Z vsakim centimetrom povečevanja izmerjene razdalje naj se z vrha proti dnu displeja izbriše po ena vrstica. Celoten displej mora biti ugasnjen, ko je razdalja večja od 84 centimetrov.
+--
+19. vaja
+Napiši program, ki bo na sredini zaslona oled izrisal kvadrat velikosti 5x5 pikslov. Ob vsakem pritisku na prvo tipko se premakne za dva piksla v levo. 
+Ob vsakem pritisku na drugo tipko za dva piksa v desno. S pomočjo potencimetra se mu nastavi njegova y pozicija od 0 do 64.
+--
+20. vaja
+Napiši program, ki bo vklapljal posamezne led diode od leve proti desni, nato od desne proti levi in to ponavljal. 
+Hitrost preklapljanja med diodami naj bo nastavljiva z razdaljo, ki jo izmeri ultrazvočni senzor. Pri kratki razdalji naj bo hitra, pri večanju razdalje pa naj se manjša.
+
+-----------------------------------------

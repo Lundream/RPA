@@ -16,9 +16,10 @@ void setup() {
   pinMode(potPin, INPUT);
 }
 
+/*vrednosti potenciometra so od 0 do 4095, lucke pa 0 do 255 in z "map" nardimo da 
+soupada 0 z 0 in 4095 z 255 (super razloženo i know haha)
+*/
 void loop(){
-  
-//vrednosti potenciometra so od 0 do 4095, lucke pa 0 do 255 in z "map" nardimo da soupadajo (super razloženo i know haha)
  potVal = analogRead(potPin);
  potVal = map(potVal, 0, 4095, 0, 255);
  analogWrite(led1, potVal);

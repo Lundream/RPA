@@ -1,0 +1,71 @@
+/* Napiši program, ki bo OLED prikazovalniku vsako sekundo osvežil prikaz temperature izmerjene z NTC termistorjem. 
+Termistor ima beta konstanto z vrednostjo 4150K. */
+
+/*  TO MORE BIT VSE V INI-ju CENE NE BO DELALO
+[env:upesy_wroom]
+platform = espressif32
+board = upesy_wroom
+framework = arduino
+monitor_speed = 115200
+lib_deps = 
+    adafruit/Adafruit GFX Library
+    adafruit/Adafruit SSD1306        
+*/
+    
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <math.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 
+#define SCREEN_HEIGHT 64
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Definicija konstant
+const int thermistorPin = 12; // Pin, na katerem je termistor
+const float R1 = 10000; // Upornost R1 v ohmih (10kΩ)
+const float beta = 4150; // Beta konstanta v Kelvinah
+const float Tz = 298.15; // Referenčna temperatura (25°C v Kelvinah)
+const float R0 = 10000; // Upornost termistorja pri T0 (10kΩ)
+
+// Funkcija za izračun temperature iz NTC termistorja
+float getTemperature(int analogValue) {
+    // Izračun upornosti termistorja
+    float R2 = R1 * (4095.0 / analogValue - 1); // 4095 za 12-bitni ADC na ESP32
+    
+    // Izračun temperature v Kelvinih
+    float temperatureK = 1.0 / ((log(R2 / R0) / beta) + (1.0 / Tz));
+    
+    // Pretvorba v Celzije
+    float temperatureC = temperatureK - 273.15;
+    
+    return temperatureC;
+}
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 10);
+
+  int analogValue = analogRead(thermistorPin); // Preberi vrednost iz termistorja
+    float temperature = getTemperature(analogValue); // Izračunaj temperaturo
+    display.print("T= ");
+    display.print(temperature);
+    display.println(" C"); // Izpis temperature v Celzijah
+    delay(1000); // Počakaj 1 sekundo
+    display.display(); 
+}

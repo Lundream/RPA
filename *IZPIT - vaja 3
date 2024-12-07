@@ -1,0 +1,27 @@
+/*3. vaja
+Napiši program, ki bo povzročil, da se bo svetilnost diode led D1 zvezno
+spreminjala od 0 do maksimalne in nato spet do nič. Cikel naj se neprestano ponavlja.
+*/
+
+#include <Arduino.h>
+
+int led1 = 19;
+
+void setup() {
+  pinMode(led1, OUTPUT);
+}
+
+void loop(){
+
+  // LED svetilnost narašča
+  for(int dutyCycle = 0; dutyCycle <= 255; dutyCycle++){   
+    analogWrite(led1, dutyCycle);
+    delay(10);
+  }
+
+  // LED svetilnost pada
+  for(int dutyCycle = 255; dutyCycle >= 0; dutyCycle--){
+    analogWrite(led1, dutyCycle);
+    delay(10);
+  }
+}

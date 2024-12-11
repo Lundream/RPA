@@ -1,0 +1,27 @@
+/*
+5. vaja
+Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno 
+od 0 do maksimalne in nato spet do nič s spreminjanjem osvetljenosti 
+foto upora priključenega na pin 13.
+*/
+#include <Arduino.h>
+
+//Deklaracija pinov in vrednosti foto upora
+int led1 = 19;
+int fotoPin = 13;
+int fotoVal = 0;
+
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(fotoPin, INPUT);
+}
+
+/*vrednosti foto upora so od 0 do 4095, lucke pa 0 do 255 in z "map" nardimo da 
+soupada 0 z 0 in 4095 z 255 (super razloženo i know haha)
+*/
+void loop(){
+ fotoVal = analogRead(fotoPin);
+ fotoVal = map(fotoVal, 0, 4095, 0, 255);
+ analogWrite(led1, fotoVal);
+ delay(10);
+}

@@ -14,12 +14,12 @@ Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno spre
 Napiši program, ki bo omogočal nastavitev svetilnosti diode led D1 zvezno od 0 do maksimalne in nato spet do nič s spreminjanjem osvetljenosti foto upora priključenega na pin 13.
 --
 6. vaja
-Napiši program, ki bo s pomočjo potenciometra najprej zvečal svetilnost dode D4 od 0 do 100%. Ko dioda D4 doseže maksimalno svetilnost se začne večati svetilnost diode D3. 
+Napiši program, ki bo s pomočjo potenciometra najprej zvečal svetilnost diode D4 od 0 do 100%. Ko dioda D4 doseže maksimalno svetilnost se začne večati svetilnost diode D3. 
 Ko dioda doseže maksimalno svetilnost se začne večati svetilnost D2. Nato še D1. 
-En obrat potenciometra mora spremeniti za četi z vsemi led diodami ugasnjenimi in končati z vsemi diodami na maksimalni svetilnosti.
+En obrat potenciometra mora spremeniti začeti z vsemi led diodami ugasnjenimi in končati z vsemi diodami na maksimalni svetilnosti.
 --
 7. vaja
-Napiši program, prikazoval višino temperature s pomočjo štirih diod led, tako kot pri 6. vaji.
+Napiši program, ki bo prikazoval višino temperature s pomočjo štirih diod led, tako kot pri 6. vaji.
 --
 8. vaja
 Napiši program, ki bo s pomočjo potencimetra spreminjal svetilnosti štirih led. Ko prva led doseže 50% svetilnosti začne svetiti druga. Ko prva dioda sveti s 100%, druga doseže 50% in začne svetiti tretja. Ponovi isto še s četrto.

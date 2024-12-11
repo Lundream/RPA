@@ -1,0 +1,67 @@
+/*
+7. vaja
+Napiši program, ki bo prikazoval višino temperature s pomočjo štirih led diod,
+tako kot pri 6. vaji.  (testirano s fajrcajgom in za rect dela)
+*/
+
+#include <Arduino.h>
+#include <math.h>
+
+// Definicija konstant
+const int led1 = 16;
+const int led2 = 17;
+const int led3 = 18;
+const int led4 = 19;
+const int thermistorPin = 12; // Pin, na katerem je termistor
+const float R1 = 10000; // Upornost R1 v ohmih (10kΩ)
+const float beta = 4150; // Beta konstanta v Kelvinah
+const float Tz = 298.15; // Referenčna temperatura (25°C v Kelvinah)
+const float R0 = 10000; // Upornost termistorja pri T0 (10kΩ)
+
+// Funkcija za izračun temperature iz NTC termistorja
+float getTemperature(int analogValue) {
+    // Izračun upornosti termistorja
+    float R2 = R1 * (4095.0 / analogValue - 1); // 4095 za 12-bitni ADC na ESP32
+    
+    // Izračun temperature v Kelvinih
+    float temperatureK = 1.0 / ((log(R2 / R0) / beta) + (1.0 / Tz));
+    
+    // Pretvorba v Celzije
+    float temperatureC = temperatureK - 273.15;
+    
+    return temperatureC;
+}
+
+void setup(){
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+  pinMode(thermistorPin, INPUT);
+}
+
+void loop(){
+ 
+int analogValue = analogRead(thermistorPin); // Preberi vrednost iz termistorja
+float temperature = getTemperature(analogValue); // Izračunaj temperaturo
+
+ analogValue = analogRead(thermistorPin);
+ analogValue = map(analogValue, 0, 1023, 0, 255);
+ analogWrite(led1, analogValue);
+ delay(10);
+
+ analogValue = analogRead(thermistorPin);
+ analogValue = map(analogValue, 1023, 2046, 0, 255);
+ analogWrite(led2, analogValue);
+ delay(10);
+
+ analogValue = analogRead(thermistorPin);
+ analogValue = map(analogValue, 2046, 3069, 0, 255);
+ analogWrite(led3, analogValue);
+ delay(10);
+
+ analogValue = analogRead(thermistorPin);
+ analogValue = map(analogValue, 3069, 4095, 0, 255);
+ analogWrite(led4, analogValue);
+ delay(10);
+}

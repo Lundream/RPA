@@ -1,0 +1,84 @@
+/*
+11. vaja
+Napiši program, ki bo ob pritisku na prvo tipko na oled dipleju izrisal pobavan krogec. 
+Ob pritisku na drugo tipko naj se na istem mestu izriše ne-pobavan krogec.
+V ini dodaj: monitor_speed = 115200
+             lib_deps = adafruit/Adafruit SSD1306@^2.5.12
+*/
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Button pins
+const int button1Pin = 15; // Button 1 pin
+const int button2Pin = 4;   // Button 2 pin
+
+// Circle state flags
+bool circleDrawn = false;   // State for unfilled circle
+bool filledCircleDrawn = false; // State for filled circle
+
+void setup() {
+  Serial.begin(115200);
+
+  // Initialize button pins
+  pinMode(button1Pin, INPUT); // Button 1
+  pinMode(button2Pin, INPUT); // Button 2
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  delay(2000);
+  display.clearDisplay();
+  display.display(); // Clear the display initially
+}
+
+void loop() {
+  // Read the button states
+  static bool lastButton1State = HIGH; // Previous state for button 1
+  static bool lastButton2State = HIGH; // Previous state for button 2
+
+  bool button1State = digitalRead(button1Pin) == LOW; // Active LOW
+  bool button2State = digitalRead(button2Pin) == LOW; // Active LOW
+
+  // Check for button 1 press
+  if (button1State && lastButton1State == HIGH) {
+    // Toggle the filled circle state
+    filledCircleDrawn = !filledCircleDrawn;
+  }
+
+  // Check for button 2 press
+  if (button2State && lastButton2State == HIGH) {
+    // Toggle the unfilled circle state
+    circleDrawn = !circleDrawn;
+  }
+
+  // Clear the display for new drawing
+  display.clearDisplay();
+
+  // Draw the circles based on their states
+  if (circleDrawn) {
+    display.drawCircle(64, 32, 20, WHITE);
+  }
+  if (filledCircleDrawn) {
+    display.fillCircle(64, 32, 20, WHITE);
+  }
+
+  // Update the display
+  display.display();
+
+  // Update last button states
+  lastButton1State = button1State;
+  lastButton2State = button2State;
+
+  // Small delay to debounce the buttons
+  delay(100);
+}

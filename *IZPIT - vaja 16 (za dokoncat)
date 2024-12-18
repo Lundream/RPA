@@ -1,0 +1,47 @@
+/*
+
+16. vaja
+Napiši program, ki bo na zaslonu oled prikazal premikanje avta od leve proti desni. Ko avto pride do konca displeja, se pokaže spet na levi in potuje proti desni.
+
+*/
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+int carX = 0; // začetna pozicija avta
+int carWidth = 16; // širina avta
+int carHeight = 8; // višina avta
+int speed = 2; // hitrost premikanja avta
+
+void setup() {
+  // Inicializacija OLED zaslona
+  display.begin(SSD1306_I2C_ADDRESS, OLED_RESET);
+  display.clearDisplay();
+}
+
+void loop() {
+  display.clearDisplay();
+
+  // Risanje avta
+  display.fillRect(carX, SCREEN_HEIGHT - carHeight - 1, carWidth, carHeight, WHITE);
+
+  // Prikaz vsebine na zaslonu
+  display.display();
+
+  // Premik avta
+  carX += speed;
+
+  // Preverimo, če je avto zapustil zaslon
+  if (carX > SCREEN_WIDTH) {
+    carX = -carWidth; // ponastavimo avto na levo stran
+  }
+
+  // Počakamo malo, da se premik ne zgodi prehitro
+  delay(50);
+}

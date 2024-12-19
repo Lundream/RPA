@@ -19,9 +19,15 @@ int carWidth = 16; // širina avta
 int carHeight = 8; // višina avta
 int speed = 2; // hitrost premikanja avta
 
+int guma1 = 0; // začetna pozicija 1 gume
+int speed1 = 2; // hitrost premikanja
+
+int guma2 = 15; // začetna pozicija 2 gume
+int speed2 = 2; // hitrost premikanja
+
 void setup() {
   // Inicializacija OLED zaslona
-  display.begin(SSD1306_I2C_ADDRESS, OLED_RESET);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
 }
 
@@ -29,19 +35,27 @@ void loop() {
   display.clearDisplay();
 
   // Risanje avta
-  display.fillRect(carX, SCREEN_HEIGHT - carHeight - 1, carWidth, carHeight, WHITE);
+  display.fillRect(carX, SCREEN_HEIGHT - carHeight - 7, carWidth, carHeight, WHITE);
+  display.fillCircle(guma1, SCREEN_HEIGHT - carHeight - 0, 3, WHITE);
+  display.fillCircle(guma2, SCREEN_HEIGHT - carHeight - 0, 3, WHITE);
 
   // Prikaz vsebine na zaslonu
   display.display();
 
   // Premik avta
   carX += speed;
+  guma1 += speed1;
+  guma2 += speed2;
 
   // Preverimo, če je avto zapustil zaslon
   if (carX > SCREEN_WIDTH) {
     carX = -carWidth; // ponastavimo avto na levo stran
   }
-
-  // Počakamo malo, da se premik ne zgodi prehitro
+  if (guma1 > SCREEN_WIDTH) {
+    guma1 = -carWidth; // ponastavimo gume na levo stran
+  }
+  if (guma2 > SCREEN_WIDTH) {
+    guma2 = -carWidth;
+  }
   delay(50);
 }

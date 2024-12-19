@@ -1,0 +1,74 @@
+/*********
+19. vaja
+Napiši program, ki bo na sredini zaslona oled izrisal kvadrat velikosti 5x5 pikslov. 
+Ob vsakem pritisku na prvo tipko se premakne za dva piksla v levo. 
+Ob vsakem pritisku na drugo tipko za dva piklsa v desno. 
+S pomočjo potencimetra se mu nastavi njegova y pozicija od 0 do 64.
+
+ini:
+monitor_speed = 115200
+lib_deps = 
+    adafruit/Adafruit GFX Library
+    adafruit/Adafruit SSD1306  
+
+*********/
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define POT_PIN 14 // Pin for potentiometer
+#define BUTTON_LEFT 15 // Pin for left button
+#define BUTTON_RIGHT 4 // Pin for right button
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+int squareX = SCREEN_WIDTH / 2 - 2; // Initial X position (centered)
+int squareY = SCREEN_HEIGHT / 2 - 2; // Initial Y position (centered)
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize OLED display
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  display.clearDisplay(); // Clear the display
+
+  // Set button pins as input with pull-up resistors
+  pinMode(BUTTON_LEFT, INPUT_PULLUP);
+  pinMode(BUTTON_RIGHT, INPUT_PULLUP);
+}
+
+void loop() {
+  // Read potentiometer value and map it to Y position
+  int potValue = analogRead(POT_PIN);
+  squareY = map(potValue, 0, 4095, 0, SCREEN_HEIGHT - 5); // Map to 0-59 (5 pixels height)
+
+  // Clear the display
+  display.clearDisplay();
+
+  // Draw the square at the current position
+  display.fillRect(squareX, squareY, 5, 5, WHITE);
+  
+  // Display the content
+  display.display();
+
+  // Check button states
+  if (digitalRead(BUTTON_LEFT) == LOW) {
+    squareX -= 2; // Move left
+    if (squareX < 0) squareX = 0; // Prevent going out of bounds
+    delay(200); // Debounce delay
+  }
+  
+  if (digitalRead(BUTTON_RIGHT) == LOW) {
+    squareX += 2; // Move right
+    if (squareX > SCREEN_WIDTH - 5) squareX = SCREEN_WIDTH - 5; // Prevent going out of bounds
+    delay(200); // Debounce delay
+  }
+
+  delay(50); // Short delay for smoother updates
+}

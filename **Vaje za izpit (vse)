@@ -57,7 +57,7 @@ Z vsakim centimetrom povečevanja izmerjene razdalje naj se z vrha proti dnu dis
 --
 19. vaja
 Napiši program, ki bo na sredini zaslona oled izrisal kvadrat velikosti 5x5 pikslov. Ob vsakem pritisku na prvo tipko se premakne za dva piksla v levo. 
-Ob vsakem pritisku na drugo tipko za dva piksa v desno. S pomočjo potencimetra se mu nastavi njegova y pozicija od 0 do 64.
+Ob vsakem pritisku na drugo tipko za dva piklsa v desno. S pomočjo potencimetra se mu nastavi njegova y pozicija od 0 do 64.
 --
 20. vaja  (ULTRAZVOCNI NE DELA)
 Napiši program, ki bo vklapljal posamezne led diode od leve proti desni, nato od desne proti levi in to ponavljal. 

@@ -1,0 +1,74 @@
+/*********
+17. vaja
+Napiši program, ki bo na zaslonu oled prikazal premikanje izrisane snežinke. 
+Premikanje se izvede s pomočjo spreminjaja položaja potenciometra.
+Celoten premik potenciometra mora zadostovati za premik snežinke čez celotno širino zaslona.
+
+ini:
+monitor_speed = 115200
+lib_deps = 
+    adafruit/Adafruit GFX Library
+    adafruit/Adafruit SSD1306  
+
+*********/
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // Širina OLED zaslona
+#define SCREEN_HEIGHT 64 // Višina OLED zaslona
+#define POT_PIN 14 // Pin za potenciometer
+
+// Deklaracija za SSD1306 zaslon, povezan preko I2C
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Bitmap snežinke
+static const unsigned char PROGMEM logo_bmp[] = {
+  B00000000, B11000000,
+  B00000001, B11000000,
+  B00000001, B11000000,
+  B00000011, B11100000,
+  B11110011, B11100000,
+  B11111110, B11111000,
+  B01111110, B11111111,
+  B00110011, B10011111,
+  B00011111, B11111100,
+  B00001101, B01110000,
+  B00011011, B10100000,
+  B00111111, B11100000,
+  B00111111, B11110000,
+  B01111100, B11110000,
+  B01110000, B01110000,
+  B00000000, B00110000
+};
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Inicializacija OLED zaslona
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  display.clearDisplay(); // Počisti zaslon
+}
+
+void loop() {
+  // Preberi vrednost potenciometra
+  int potValue = analogRead(POT_PIN);
+  
+  // Izračunaj X koordinato snežinke
+  int snowflakeX = map(potValue, 0, 4095, 0, SCREEN_WIDTH - 16); // -16, da se snežinka ne izriše izven zaslona
+
+  // Počisti zaslon
+  display.clearDisplay();
+
+  // Izriši snežinko na izračunanih koordinatah
+  display.drawBitmap(snowflakeX, (SCREEN_HEIGHT - 16) / 2, logo_bmp, 16, 16, WHITE); // Sredina Y koordinata
+
+  // Prikaži vsebino zaslona
+  display.display();
+
+  delay(50); // Kratka zamuda za gladko premikanje
+}

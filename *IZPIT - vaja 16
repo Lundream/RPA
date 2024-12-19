@@ -1,0 +1,76 @@
+/*********
+16. vaja
+Napiši program, ki bo v centru oled zaslona izrisal kvadrat s stranico 10 pikslov. 
+Kvadrat naj se vrti. 
+Hitrost vrtenja naj bo nastavljiva s potenciometrom.
+
+ini: 
+monitor_speed = 115200
+lib_deps = 
+    adafruit/Adafruit GFX Library
+    adafruit/Adafruit SSD1306  
+*********/
+
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // Širina OLED zaslona v pikslah
+#define SCREEN_HEIGHT 64 // Višina OLED zaslona v pikslah
+#define POT_PIN 14 // Pin za potenciometer
+
+// Deklaracija za SSD1306 zaslon, povezan preko I2C
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+int angle = 0; // Trenutni kot vrtenja
+int squareSize = 10; // Velikost kvadrata
+
+void setup() {
+  Serial.begin(115200);
+
+  // Inicializacija OLED zaslona
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  display.clearDisplay(); // Počisti zaslon
+}
+
+void loop() {
+  // Preberi vrednost potenciometra in izračunaj hitrost vrtenja
+  int potValue = analogRead(POT_PIN);
+  int delayTime = map(potValue, 0, 4095, 500, 10); // Nastavi zamik med 50 in 500 ms
+
+  // Izriši kvadrat
+  display.clearDisplay(); // Počisti zaslon
+  int x = (SCREEN_WIDTH - squareSize) / 2; // X koordinata
+  int y = (SCREEN_HEIGHT - squareSize) / 2; // Y koordinata
+
+  // Izračunaj rotirane koordinate
+  float rad = radians(angle);
+  int x1 = x + (squareSize / 2) * cos(rad) - (squareSize / 2) * sin(rad);
+  int y1 = y + (squareSize / 2) * sin(rad) + (squareSize / 2) * cos(rad);
+  int x2 = x + (squareSize / 2) * cos(rad + PI/2) - (squareSize / 2) * sin(rad + PI/2);
+  int y2 = y + (squareSize / 2) * sin(rad + PI/2) + (squareSize / 2) * cos(rad + PI/2);
+  int x3 = x + (squareSize / 2) * cos(rad + PI) - (squareSize / 2) * sin(rad + PI);
+  int y3 = y + (squareSize / 2) * sin(rad + PI) + (squareSize / 2) * cos(rad + PI);
+  int x4 = x + (squareSize / 2) * cos(rad + 3*PI/2) - (squareSize / 2) * sin(rad + 3*PI/2);
+  int y4 = y + (squareSize / 2) * sin(rad + 3*PI/2) + (squareSize / 2) * cos(rad + 3*PI/2);
+
+  // Izriši kvadrat
+  display.drawLine(x1, y1, x2, y2, WHITE);
+  display.drawLine(x2, y2, x3, y3, WHITE);
+  display.drawLine(x3, y3, x4, y4, WHITE);
+  display.drawLine(x4, y4, x1, y1, WHITE);
+
+  display.display(); // Prikaži vsebino zaslona
+
+  // Povečaj kot za vrtenje
+  angle += 5; // Povečaj kot za 5 stopinj
+  if (angle >= 360) {
+    angle = 0; // Ponastavi kot, ko doseže 360 stopinj
+  }
+
+  delay(delayTime); // Počakaj pred naslednjim izrisom
+}

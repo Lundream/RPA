@@ -1,3 +1,9 @@
+/*
+12. vaja
+Napiši program, ki bo prižgal led in na oled izpisal odklenjeno le ob zaporednem pritisku prve, druge, prve, prve in druge tipke. 
+Ves preostali čas naj bo led dioda ugasnjena in na oled naj bo izpisano: zakljenjeno.
+*/
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>

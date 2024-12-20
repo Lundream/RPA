@@ -1,0 +1,96 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Button pins
+const int button1Pin = 15; // Button 1 pin
+const int button2Pin = 4;   // Button 2 pin
+
+// LED pin
+const int ledPin = 13; // LED pin
+
+// Sequence for unlocking
+const int unlockSequence[] = {1, 2, 1, 1, 2}; // Sequence of button presses
+const int sequenceLength = sizeof(unlockSequence) / sizeof(unlockSequence[0]);
+
+// Current position in the sequence
+int currentStep = 0;
+
+void setup() {
+  Serial.begin(115200);
+
+  // Initialize button pins
+  pinMode(button1Pin, INPUT_PULLUP); // Button 1
+  pinMode(button2Pin, INPUT_PULLUP); // Button 2
+  pinMode(ledPin, OUTPUT);            // LED pin
+
+  // Initialize the display
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Loop forever if allocation failed
+  }
+  delay(2000);
+  display.clearDisplay();
+  display.display(); // Clear the display initially
+}
+
+void loop() {
+  // Read the button states
+  bool button1State = digitalRead(button1Pin) == LOW; // Active LOW
+  bool button2State = digitalRead(button2Pin) == LOW; // Active LOW
+
+  // Check for button 1 press
+  if (button1State) {
+    Serial.println("Tipka 1 pritisnjena");
+    if (currentStep < sequenceLength && unlockSequence[currentStep] == 1) {
+      currentStep++;
+    } else {
+      currentStep = 0; // Reset if the sequence is broken
+    }
+    delay(500); // Delay after button 1 press
+  }
+
+  // Check for button 2 press
+  if (button2State) {
+    Serial.println("Tipka 2 pritisnjena");
+    if (currentStep < sequenceLength && unlockSequence[currentStep] == 2) {
+      currentStep++;
+    } else {
+      currentStep = 0; // Reset if the sequence is broken
+    }
+    delay(500); // Delay after button 2 press
+  }
+
+  // Check if the sequence is complete
+  if (currentStep == sequenceLength) {
+    digitalWrite(ledPin, HIGH); // Turn on LED
+    display.setTextSize(2); // Draw 2X-scale text
+    display.setTextColor(SSD1306_WHITE);
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("odklenjeno");
+    display.display(); // Update the display
+    Serial.println("Koda odklenjena!"); // Serial output for unlocking
+    delay(500);
+  } else {
+    digitalWrite(ledPin, LOW); // Turn off LED
+    display.setTextSize(2); // Draw 2X-scale text
+    display.setTextColor(SSD1306_WHITE);
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("zaklenjeno");
+    display.display(); // Update the display
+    Serial.println("Koda zaklenjena."); // Serial output for locking
+    delay(500);
+  }
+
+  // Small delay to debounce the buttons
+  delay(100);
+}
